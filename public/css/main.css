@@ -1,0 +1,24 @@
+.post {
+    margin: auto;
+    width: 50%;
+    line-height: 1.8;
+    font-size: large;
+    font-family: sans-serif;
+}
+
+.post + .post {
+    border-top: 1px solid #a0a0a0;
+    padding-top: 3rem;
+    margin-top: 3rem;
+}
+
+a {
+    text-decoration: none;
+    color: #aaa;
+    transition: 0.1s;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #555;
+}
