@@ -27,32 +27,11 @@ class Post {
     }
 
     public static function all () {
-        
-        $posts = array_diff(
 
-            scandir( resource_path('\\views\\posts\\') ),
-            ['.', '..']
+        // jeffery method
+        $files = File::files(resource_path('\\views\\posts\\'));
 
-        );
-
-        $contents = [];
-
-        foreach ( $posts as $post ) {
-
-            $path = resource_path('\\views\\posts\\' . $post);
-
-            if (! file_exists($path)) {
-                $contents[] = "---------- POST NOT FOUND ------------";
-                continue;
-            }
-
-            $contents[] = file_get_contents($path);
-
-        }
-
-        return cache()->remember('posts', 10, function () use ($contents) { // caching posts
-            return $contents;
-        });
+        return array_map( fn ($file) => $file->getContents() , $files );
 
     }
 
