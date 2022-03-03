@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('posts');
+    return view( 'posts', [ 'posts' => Post::all() ] );
 });
 
 
-Route::get('/post/{id}', function ($id) {
-    return view('post', [ 'post_id' => $id ]);
-})->where("id", "[1-3]");
+Route::get('/post/{pName}', function ($pName) {
+
+    // fetch html post file data
+    $post = Post::find($pName);
+
+    return view('post', [ 'content' => $post , 'title' => $pName ]);
+})->where("pName", "[0-9A-z_\-]+"); // A--Z and a--z and allowed any number of chars and - and _ allowed
