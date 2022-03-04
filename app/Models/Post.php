@@ -5,33 +5,56 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\File;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
+use SplFileInfo;
 
 class Post {
 
-    public static function find($pName) {
+    public $title;
+    public $discription;
+    public $date;
+    public $body;
+    public $slug; // filename
 
-        $path = resource_path('\\views\\posts\\' . $pName . '.html');
-
-        // dd($path); // testing
-
-        if (! file_exists($path)) {
-            // throw new Exception("File Not Found!!!!");
-
-            throw new ModelNotFoundException();
-        }
-
-        return cache()->remember("post.$pName", 10 , function () use ($path) {
-            return file_get_contents($path);
-        });
-
+    function __construct($title, $discription, $date, $body, $slug) {
+        $this->title = $title;
+        $this->discription = $discription;
+        $this->date = $date;
+        $this->body = $body;
+        $this->slug = $slug;
     }
 
     public static function all () {
 
-        // jeffery method
-        $files = File::files(resource_path('\\views\\posts\\'));
+        $files = File::files(resource_path('\\views\\posts'));
 
-        return array_map( fn ($file) => $file->getContents() , $files );
+        $posts = array_map(
+            function (SplFileInfo $file) {
+                $post = YamlFrontMatter::parseFile($file);
+
+                return new Post(
+                    $post->title,
+                    $post->discription,
+                    $post->date,
+                    $post->body(),
+                    $post->slug
+                );
+            },
+            $files
+        );
+
+        return $posts;
+
+    }
+
+    public static function find($slug) {
+
+        $posts = static::all();
+
+        foreach($posts as $post) {
+            if ($post->slug == $slug)
+                return $post;
+        }
 
     }
 

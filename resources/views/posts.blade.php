@@ -12,7 +12,15 @@
 
     @foreach ($posts as $post)
         <div class="post">
-            <?= $post ?>
+            <h1>
+                <a href="/post/<?= $post->slug ?>">
+                    <?= $post->title ?>
+                </a>
+            </h1>
+
+            <p>
+                <?= $post->discription ?>
+            </p>
         </div>
     @endforeach
 
