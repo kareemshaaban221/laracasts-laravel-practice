@@ -1,3 +1,3 @@
 # Laravel Project With Laracasts
 
-### Laravel 8
+### Blog (Posts) Page
