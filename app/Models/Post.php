@@ -43,6 +43,8 @@ class Post {
             $files
         );
 
+        cache()->forever('posts', $posts);
+
         return $posts;
 
     }
@@ -55,6 +57,8 @@ class Post {
             if ($post->slug == $slug)
                 return $post;
         }
+
+        throw new ModelNotFoundException();
 
     }
 
