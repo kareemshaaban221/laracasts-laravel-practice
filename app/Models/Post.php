@@ -26,26 +26,25 @@ class Post {
 
     public static function all () {
 
-        $files = File::files(resource_path('\\views\\posts'));
-
-        $posts = array_map(
-            function (SplFileInfo $file) {
-                $post = YamlFrontMatter::parseFile($file);
-
-                return new Post(
-                    $post->title,
-                    $post->discription,
-                    $post->date,
-                    $post->body(),
-                    $post->slug
-                );
-            },
-            $files
+        return cache()->rememberForever('posts',
+            function () {
+                return collect( File::files(resource_path('\\views\\posts')) )
+                    ->map(
+                        fn ($file) => YamlFrontMatter::parseFile($file)
+                    )
+                    ->map(
+                        fn ($doc) =>
+                        new Post(
+                            $doc->title,
+                            $doc->discription,
+                            $doc->date,
+                            $doc->body(),
+                            $doc->slug
+                        )
+                    )
+                    ->sortBy('slug'); // sorting
+            }
         );
-
-        cache()->forever('posts', $posts);
-
-        return $posts;
 
     }
 
