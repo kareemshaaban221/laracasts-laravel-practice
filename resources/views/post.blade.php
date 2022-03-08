@@ -1,28 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><?= strtoupper($post->title) ?></title>
+<x-layout title="{{$post->title}}">
+    <x-slot name="content">
+        <div class="post light-post p-2">
 
-    <link rel="stylesheet" href="/css/main.css">
-</head>
-<body>
+            <h1>
+                {{$post->title}}
+            </h1>
 
-    <div class="post">
+            <p>
+                {{$post->body}}
+            </p>
 
-        <h1>
-            <?= $post->title ?>
-        </h1>
+            <a href="/"> Go Back </a>
 
-        <p>
-            <?= $post->body ?>
-        </p>
-
-        <a href="/"> Go Back </a>
-
-    </div>
-
-</body>
-</html>
+        </div>
+    </x-slot>
+</x-layout>

@@ -50,15 +50,9 @@ class Post {
 
     public static function find($slug) {
 
-        $posts = static::all();
+        $post = static::all()->firstWhere('slug', $slug);
 
-        foreach($posts as $post) {
-            if ($post->slug == $slug)
-                return $post;
-        }
-
-        throw new ModelNotFoundException();
-
+        return $post ? $post : throw new ModelNotFoundException();
     }
 
 }

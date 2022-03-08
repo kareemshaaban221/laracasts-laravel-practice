@@ -25,4 +25,4 @@ Route::get('/post/{pName}', function ($pName) {
     $post = Post::find($pName);
 
     return view('post', [ 'post' => $post ]);
-})->where("pName", "[0-9A-z_\-]+"); // A--Z and a--z and allowed any number of chars and - and _ allowed
+});
