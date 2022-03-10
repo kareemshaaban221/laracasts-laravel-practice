@@ -7,6 +7,10 @@
             </h1>
 
             <p>
+                <small><a href="">Author: {{$post->user->name}}</a></small>
+            </p>
+
+            <p>
                 {{$post->content}}
             </p>
 

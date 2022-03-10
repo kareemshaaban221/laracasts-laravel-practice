@@ -11,7 +11,7 @@ class Post extends Model
 
     // protected $gaurded = [];
 
-    protected $fillable = ['title', 'description', 'category_id', 'content', 'published_at'];
+    protected $fillable = ['title', 'description', 'category_id', 'user_id', 'content', 'published_at'];
 
     public function getRouteKeyName() {
         return 'title';
@@ -19,5 +19,9 @@ class Post extends Model
 
     public function category() {
         return $this->belongsTo(Category::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }
