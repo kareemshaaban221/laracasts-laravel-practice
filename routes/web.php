@@ -2,6 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,18 +18,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    return view( 'posts', [ 'posts' => Post::with('category')->get() ] );
+    return view( 'posts', [ 'posts' => Post::with('category', 'user')->get() ] );
 
 });
 
 
-Route::get('/post/{post}', function (Post $post) { // search by title and reason in Post model getRouteKeyName() function
-
-    // $post = Post::findOrFail($id);
+Route::get('/post/{post:title}', function (Post $post) {
 
     return view('post', [ 'post' => $post ]);
+
 });
 
 Route::get('/category/{cat:slug}', function (Category $cat) {
     return view( 'posts', [ 'posts' => $cat->posts ] );
+});
+
+Route::get('/author/{user:name}', function (User $user) {
+    return view( 'posts', [ 'posts' => $user->posts ] );
 });

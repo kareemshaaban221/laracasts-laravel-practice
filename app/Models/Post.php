@@ -14,7 +14,7 @@ class Post extends Model
     protected $fillable = ['title', 'description', 'category_id', 'user_id', 'content', 'published_at'];
 
     public function getRouteKeyName() {
-        return 'title';
+        // return 'title';
     }
 
     public function category() {

@@ -12,6 +12,12 @@
 
             <p>
                 <small>
+                    <a href="/author/{{ $post->user->name }}">Author: {{ $post->user->name }} </a>
+                </small>
+            </p>
+
+            <p>
+                <small>
                     <a href="/category/{{ $post->category->slug }}">Category: {{$post->category->name}} </a>
                 </small>
             </p>
