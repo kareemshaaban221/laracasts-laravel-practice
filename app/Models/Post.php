@@ -21,7 +21,7 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function author() { // without foreign key, laravel assumed it is author_id
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

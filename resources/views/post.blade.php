@@ -7,7 +7,7 @@
             </h1>
 
             <p>
-                <small><a href="/author/{{ $post->user->name }}">Author: {{$post->user->name}}</a></small>
+                <small><a href="/author/{{ $post->author->username }}">Author: {{$post->author->name}}</a></small>
             </p>
 
             <p>

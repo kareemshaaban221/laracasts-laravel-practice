@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    return view( 'posts', [ 'posts' => Post::with('category', 'user')->get() ] );
+    return view( 'posts', [ 'posts' => Post::with('category', 'author')->get() ] );
 
 });
 
@@ -33,6 +33,6 @@ Route::get('/category/{cat:slug}', function (Category $cat) {
     return view( 'posts', [ 'posts' => $cat->posts ] );
 });
 
-Route::get('/author/{user:name}', function (User $user) {
+Route::get('/author/{user:username}', function (User $user) {
     return view( 'posts', [ 'posts' => $user->posts ] );
 });
