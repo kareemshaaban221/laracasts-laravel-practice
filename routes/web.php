@@ -30,9 +30,9 @@ Route::get('/post/{post:title}', function (Post $post) {
 });
 
 Route::get('/category/{cat:slug}', function (Category $cat) {
-    return view( 'posts', [ 'posts' => $cat->posts ] );
+    return view( 'posts', [ 'posts' => $cat->posts->load(['category', 'author']) ] );
 });
 
 Route::get('/author/{user:username}', function (User $user) {
-    return view( 'posts', [ 'posts' => $user->posts ] );
+    return view( 'posts', [ 'posts' => $user->posts->load(['category', 'author']) ] );
 });
