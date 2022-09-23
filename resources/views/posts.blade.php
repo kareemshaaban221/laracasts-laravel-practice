@@ -5,7 +5,7 @@
         @foreach ($posts as $post)
         <div class="post p-5 {{$loop->odd ? 'dark-post' : 'light-post'}}">
             <h1>
-                <a href="/post/{{ $post->title }}">
+                <a href="/post/{{ $post->id }}">
                     {{$post->title}}
                 </a>
             </h1>
