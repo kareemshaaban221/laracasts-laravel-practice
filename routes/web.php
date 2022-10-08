@@ -24,15 +24,15 @@ Route::get('/post/{post:title}', [PostController::class, 'show']); // Post::wher
 // route model binding
 
 Route::get('/category/{cat:slug}', function (Category $cat) {
-    return view( 'posts', [
+    return view( 'posts.index', [
         'posts' => $cat->posts->load(['category', 'author']),
         // load() method solving n+1 problem and we can replace it with $with variable in the model of posts
         // to load these relationships by default
-        'selectedCategory' => $cat,
-        'categories' => Category::all()
     ] );
 });
 
-Route::get('/author/{user:username}', function (User $user) {
-    return view( 'posts', [ 'posts' => $user->posts->load(['category', 'author']) ] );
-});
+// Route::get('/author/{user:username}', function (User $user) {
+//     return view( 'posts.index', [
+//         'posts' => $user->posts->load(['category', 'author']),
+//     ] );
+// })->name('author');

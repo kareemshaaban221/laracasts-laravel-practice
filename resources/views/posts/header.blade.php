@@ -15,20 +15,7 @@
         <!--  Category -->
         <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl mb-3" x-data="{ show: false }">
 
-            <x-dropdown :categories="$categories" :selectedCategory="$selectedCategory ?? null">
-                <x-slot:trigger>
-                    <button @click="show = !show" class="py-2 pl-3 pr-9 text-sm font-semibold w-32 text-left" @click.away="show = false">
-                        @isset($selectedCategory)
-                            {{$selectedCategory->name}}
-                        @else
-                            Category--
-                        @endisset
-
-                        <x-icon class="absolute pointer-events-none inline-flex" style="right: 12px;" width="22"
-                            height="22" viewBox="0 0 22 22" name="down-arrow"></x-icon>
-                    </button>
-                </x-slot>
-            </x-dropdown>
+            <x-category-dropdown />
 
             {{-- <select class="flex-1 appearance-none bg-transparent py-2 pl-3 pr-9 text-sm font-semibold">
                 <option value="category" disabled selected>Category
@@ -78,6 +65,9 @@
         <!-- Search -->
         <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl px-3 py-2">
             <form method="GET" action="#">
+                @if (request('category'))
+                    <input type="hidden" name="category" value="{{request('category')}}">
+                @endif
                 <input type="text" name="search" placeholder="Find something"
                        class="bg-transparent placeholder-black font-semibold text-sm"
                        value="{{request('search')}}">

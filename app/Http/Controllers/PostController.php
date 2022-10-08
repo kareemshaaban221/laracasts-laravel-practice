@@ -11,14 +11,12 @@ class PostController extends Controller
     protected function index() {
         // dd(Post::latest()->with('category', 'author')->get());
         // with for solving n+1 problem of lazy load relation ship records
-        return view( 'posts', [
-            'posts' => Post::latest('posts.created_at')->with('category', 'author')->filter(request(['search', 'category']))->get(),
-            'categories' => Category::all(),
-            'selectedCategory' => (request('category') ?? null) ? Category::firstWhere('slug', request('category')) : null
+        return view( 'posts.index', [
+            'posts' => Post::latest('posts.created_at')->with('category', 'author')->filter(request(['search', 'category', 'author']))->get(),
         ]);
     }
 
     protected function show(Post $post) {
-        return view('post', [ 'post' => $post ]);
+        return view('posts.show', [ 'post' => $post ]);
     }
 }

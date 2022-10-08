@@ -30,27 +30,29 @@ class Post extends Model
 
     public function scopeFilter($query, array $filters) { // called as Post::filter('search')
 
+        // search filtering
         $query
             ->when($filters['search'] ?? false, fn($query, $search) => // if null returns false (the second op), otherwise return the first op
-                $query
-                    ->where('title' , 'like', '%'.$search.'%')
-                    ->when($filters['category'] ?? false, fn($query, $category) =>
-                        $query->whereHas('category', fn($query) =>
-                            $query->where('slug', $category)
-                        )
-                    )
-                    ->orWhere('content', 'like', '%'.$search.'%')
-                    ->when($filters['category'] ?? false, fn($query, $category) => // if null returns false (the second op), otherwise return the first op
-                        $query->whereHas('category', fn($query) =>
-                            $query->where('slug', $category)
-                        )
-                    )
+                $query->where(fn($query) => // to solving the precedence problem 1-finish = or = in this clause 2-go to other clauses separated with (and)
+                    $query
+                        ->where('title' , 'like', '%'.$search.'%')
+                        ->orWhere('content', 'like', '%'.$search.'%')
+                )
             );
 
+        // category filtering
         $query
-            ->when($filters['category'] ?? false, fn($query, $category) => // if null returns false (the second op), otherwise return the first op
+            ->when($filters['category'] ?? false, fn($query, $category) =>
                 $query->whereHas('category', fn($query) =>
                     $query->where('slug', $category)
+            )
+        );
+
+        // author filtering
+        $query
+            ->when($filters['author'] ?? false, fn($query, $author) =>
+                $query->whereHas('author', fn($query) =>
+                    $query->where('username', $author)
             )
         );
 
