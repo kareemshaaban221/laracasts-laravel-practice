@@ -1,38 +1,42 @@
 <x-layout>
-    <x-slot name='content'>
+    <x-slot:content>
 
-        {{-- posts --}}
-        @foreach ($posts as $post)
-        <div class="post p-5 {{$loop->odd ? 'dark-post' : 'light-post'}}">
-            <h1>
-                <a href="/post/{{ $post->id }}">
-                    {{$post->title}}
-                </a>
-            </h1>
+        @include('posts.header')
 
-            <p>
-                <small>
-                    <a href="/author/{{ $post->author->username }}">Author: {{ $post->author->name }} </a>
-                </small>
-            </p>
+        {{------------------------------------ Articles -------------------------------------}}
+        <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
 
-            <p>
-                <small>
-                    <a href="/category/{{ $post->category->slug }}">Category: {{$post->category->name}} </a>
-                </small>
-            </p>
+            @if ($posts->count())
 
-            <p>
-                <small>
-                    {{$post->published_at}}
-                </small>
-            </p>
+                @foreach ($posts as $post)
 
-            <h5 class="font-weight-bolder">
-                {{$post->description}}
-            </h5>
-        </div>
-        @endforeach
+                    @if ($loop->first)
+                        @include('posts.article1')
+
+                    @elseif ($loop->index == 1)
+                        <div class="lg:grid lg:grid-cols-2">
+                            @include('posts.article2')
+                    @elseif ($loop->index == 2)
+                            @include('posts.article2')
+                        </div>
+                    @else
+                        @if ($loop->index % 3 == 0)
+                            <div class="lg:grid lg:grid-cols-3">
+                                @include('posts.article3')
+                        @elseif ($loop->index % 3 < 2)
+                                @include('posts.article3')
+                        @else
+                                @include('posts.article3')
+                            </div>
+                        @endif
+                    @endif
+
+                @endforeach
+
+            @else
+                <h3 class="text-center">No Posts Found :(</h3>
+            @endif
+        </main>
 
     </x-slot>
 </x-layout>
