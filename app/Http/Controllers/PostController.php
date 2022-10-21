@@ -12,7 +12,7 @@ class PostController extends Controller
         // dd(Post::latest()->with('category', 'author')->get());
         // with for solving n+1 problem of lazy load relation ship records
         return view( 'posts.index', [
-            'posts' => Post::latest('posts.created_at')->with('category', 'author')->filter(request(['search', 'category', 'author']))->get(),
+            'posts' => Post::latest('posts.created_at')->with('category', 'author')->filter(request(['search', 'category', 'author']))->paginate(),
         ]);
     }
 

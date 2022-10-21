@@ -18,10 +18,11 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        $paras = $this->faker->paragraphs(3);
         return [
             'title' => $this->faker->sentence(),
             'description' => $this->faker->sentence(),
-            'content' => $this->faker->paragraph(),
+            'content' => '<p>' . $paras[0] . '</p>' . '<p>' . $paras[1] . '</p>' . '<p>' . $paras[2] . '</p>',
             'published_at' => now(),
             'user_id' => User::factory(),
             'category_id' => Category::factory()
